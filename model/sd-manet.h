@@ -32,6 +32,17 @@
 namespace ns3 {
 #define LOOP_INTERVAL  1.0
 
+/**
+ * \ingroup applications
+ * \defgroup SdManet SdManet Application
+ */
+/**
+* \ingroup onoff
+*
+* \brief Create SdManet agent on the node and execute the rules
+* installed in nodes.
+*/
+
 class SdManet : public Application
 {
 public:
@@ -46,7 +57,7 @@ private:
   virtual void StartApplication (void);    // Called at time specified by Start
   virtual void StopApplication (void);     // Called at time specified by Stop
 
-  Ptr<sdmanet::Agent> m_agent;
+  Ptr<sdmanet::Agent> m_agent;  //The agent application installed in node.
   EventId  m_startStopEvent;
 
 
@@ -54,7 +65,7 @@ private:
   void ScheduleStopLoop();
 };
 
-}
+} // namespace ns3
 
 #endif /* SD_MANET_H */
 

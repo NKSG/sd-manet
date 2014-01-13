@@ -28,53 +28,53 @@ NS_LOG_COMPONENT_DEFINE ("MoveActionModel");
 
 namespace ns3{
 
-MoveAction::MoveAction()
-{
-	NS_LOG_FUNCTION (this);
-}
+  MoveAction::MoveAction()
+  {
+    NS_LOG_FUNCTION (this);
+  }
 
-MoveAction::MoveAction(Ptr<Node> node, double x, double y)
-  :
-  Action(node)
-{
-  m_targetPos.x = x;
-  m_targetPos.y = y;
-  NS_LOG_FUNCTION(this);
-}
-MoveAction::~MoveAction()
-{
-	NS_LOG_FUNCTION (this);
-}
+  MoveAction::MoveAction(Ptr<Node> node, double x, double y)
+    :
+    Action(node)
+  {
+    m_targetPos.x = x;
+    m_targetPos.y = y;
+    NS_LOG_FUNCTION(this);
+  }
+  MoveAction::~MoveAction()
+  {
+    NS_LOG_FUNCTION (this);
+  }
 
 
-bool
-MoveAction::execute()
-{
-  NS_LOG_DEBUG("move action execute");
-  Ptr<MobilityModel> mobility = m_node->GetObject<MobilityModel>();
-  Vector pos = mobility->GetPosition();
-  delta_x = (m_targetPos.x - pos.x)/MOVE_TIMES;
-  delta_y = (m_targetPos.y - pos.y)/MOVE_TIMES;
+  bool
+  MoveAction::execute()
+  {
+    NS_LOG_DEBUG("move action execute");
+    Ptr<MobilityModel> mobility = m_node->GetObject<MobilityModel>();
+    Vector pos = mobility->GetPosition();
+    delta_x = (m_targetPos.x - pos.x)/MOVE_TIMES;
+    delta_y = (m_targetPos.y - pos.y)/MOVE_TIMES;
 
-  advancePosition();
+    advancePosition();
 
     return true;
-}
+  }
 
-void
-MoveAction::advancePosition()
-{
-  Ptr<MobilityModel> mobility = m_node->GetObject<MobilityModel>();
-  Vector pos = mobility->GetPosition();
+  void
+  MoveAction::advancePosition()
+  {
+    Ptr<MobilityModel> mobility = m_node->GetObject<MobilityModel>();
+    Vector pos = mobility->GetPosition();
 
-  if(pos.x == m_targetPos.x && pos.y == m_targetPos.y)
-    return;
-  pos.x += delta_x;
-  pos.y += delta_y;
+    if(pos.x == m_targetPos.x && pos.y == m_targetPos.y)
+      return;
+    pos.x += delta_x;
+    pos.y += delta_y;
 
-  mobility->SetPosition(pos);
-  Simulator::Schedule(Seconds(MOVE_INTERVAL_TIME), &MoveAction::advancePosition, this);
-}
+    mobility->SetPosition(pos);
+    Simulator::Schedule(Seconds(MOVE_INTERVAL_TIME), &MoveAction::advancePosition, this);
+  }
 
 
 }//namespace ns3

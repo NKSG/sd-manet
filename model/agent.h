@@ -35,6 +35,7 @@ namespace ns3{
   namespace sdmanet{
 
     class Controller;
+    //Type define for rules list
     typedef std::list<Rule *> RULELIST;
 
     class Agent : public Object
@@ -46,21 +47,34 @@ namespace ns3{
       void loop();
 
       void setController(Ptr<sdmanet::Controller> c);
+      /**
+       * \brief install a rule to the rules list.
+       * \param rule Rule to installed.
+       * \return void
+       */
       void installRule(Rule* rule);
       void setNode(Ptr<Node> node);
       Ptr<Node> getNode();
 
     private:
-      RULELIST m_installedRules;
-      RULELIST m_exeRules;
-      RULELIST m_completeRules;
+      RULELIST m_installedRules; //Rules list installed in the agent.
+      RULELIST m_exeRules;       //Rules list needed to execute all the time.
+      RULELIST m_completeRules;  //Rules list had completed.
 
       RULELIST::iterator rule;
 
-      Ptr<sdmanet::Controller> m_controller;
-      Ptr<Node> m_node;
+      Ptr<sdmanet::Controller> m_controller; //The controller node connected.
+      Ptr<Node> m_node; //The node agent application installed.
 
+      /**
+       * \brief Check the condition of the rules installed in rules list one by one.
+       */
       void checkInstalledRules();
+
+      /**
+       * \brief Execute the rules need to execute all the time utill some condition triggered.
+       *
+       */
       void doExeRule();
     };
 

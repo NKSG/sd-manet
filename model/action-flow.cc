@@ -25,35 +25,35 @@ NS_LOG_COMPONENT_DEFINE ("FlowActionModel");
 
 namespace ns3{
 
-FlowAction::FlowAction()
-{
-	NS_LOG_FUNCTION (this);
-}
-
-FlowAction::FlowAction(Ptr<Node> node, Ipv4Address target, Ipv4Address nexthop)
-  :
-  Action(node),
-  m_target(target),
-  m_nexthop(nexthop)
-{
-  NS_LOG_FUNCTION(this);
-}
-
-FlowAction::~FlowAction()
-{
+  FlowAction::FlowAction()
+  {
     NS_LOG_FUNCTION (this);
-}
+  }
 
-bool
-FlowAction::execute()
-{
-  NS_LOG_DEBUG("flow action execute");
-  Ipv4StaticRoutingHelper staticRoutingHelper;
-  Ptr<Ipv4> ipv4 = m_node->GetObject<Ipv4>();
-  Ptr<Ipv4StaticRouting> staticRouting = staticRoutingHelper.GetStaticRouting(ipv4);
-  staticRouting->AddHostRouteTo(m_target, m_nexthop, 1);
-  return true;
-}
+  FlowAction::FlowAction(Ptr<Node> node, Ipv4Address target, Ipv4Address nexthop)
+    :
+    Action(node),
+    m_target(target),
+    m_nexthop(nexthop)
+  {
+    NS_LOG_FUNCTION(this);
+  }
+
+  FlowAction::~FlowAction()
+  {
+    NS_LOG_FUNCTION (this);
+  }
+
+  bool
+  FlowAction::execute()
+  {
+    NS_LOG_DEBUG("flow action execute");
+    Ipv4StaticRoutingHelper staticRoutingHelper;
+    Ptr<Ipv4> ipv4 = m_node->GetObject<Ipv4>();
+    Ptr<Ipv4StaticRouting> staticRouting = staticRoutingHelper.GetStaticRouting(ipv4);
+    staticRouting->AddHostRouteTo(m_target, m_nexthop, 1);
+    return true;
+  }
 
 
 }//namespace ns3

@@ -26,25 +26,29 @@
 
 namespace ns3{
 
-class Condition
-{
-    public:
-        Condition();
-  Condition(Ptr<Node> node);
-  virtual ~Condition();
-        virtual bool check() = 0;
-        void addNext(Condition* c);
-        Condition* getNext();
+  class Condition
+  {
+  public:
+    Condition();
+    Condition(Ptr<Node> node);
+    virtual ~Condition();
+    virtual bool check() = 0;
+    void addNext(Condition* c);
+    Condition* getNext();
 
 
-    private:
-        Condition *pNext;
-public:
-  Ptr<Node> m_node;
+  private:
+    /**
+     * Pointer to the next condition is used to build a condition list.
+     * All the conditions in a condition list are AND relationship.
+     * And the relationship between condition list is OR.
+     * It is used to indicate the compositive relation of conditions.
+     */
+    Condition *pNext;
+  public:
+    Ptr<Node> m_node; //Because condition check always need to know about node information.
 
-};
-
-
+  };
 
 }// namespace ns3
 

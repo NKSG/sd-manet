@@ -31,23 +31,23 @@ namespace ns3{
 #define MOVE_TIMES 10
 #define MOVE_INTERVAL_TIME 1.0
 
-class MoveAction : public Action
-{
-    public:
-        MoveAction();
+  class MoveAction : public Action
+  {
+  public:
+    MoveAction();
 
-  MoveAction(Ptr<Node> node, double x, double y);
-        virtual ~MoveAction();
+    MoveAction(Ptr<Node> node, double x, double y);
+    virtual ~MoveAction();
 
-        bool execute();
+    bool execute();
 
-    private:
-  void advancePosition();
-  geo_position m_targetPos;
-  double delta_x;
-  double delta_y;
+  private:
+    void advancePosition();
+    geo_position m_targetPos;
+    double delta_x;
+    double delta_y;
 
-};
+  };
 
 }// namespace ns3
 

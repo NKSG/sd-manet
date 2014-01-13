@@ -27,29 +27,29 @@
 
 namespace ns3{
 
-struct geo_position{
+  struct geo_position{
     double x;
     double y;
-};
+  };
 
-class GeoCondition : public Condition
-{
-    public:
-        GeoCondition();
-  GeoCondition(double x, double y, Ptr<Node> node);
-        virtual ~GeoCondition();
+  class GeoCondition : public Condition
+  {
+  public:
+    GeoCondition();
+    GeoCondition(double x, double y, Ptr<Node> node);
+    virtual ~GeoCondition();
 
-        bool check();
+    bool check();
 
 
 
-    private:
-  geo_position getCurPos();
+  private:
+    geo_position getCurPos();
 
-        double m_delta;
-        geo_position m_pos;
+    double m_delta;
+    geo_position m_pos;
 
-};
+  };
 
 }// namespace ns3
 

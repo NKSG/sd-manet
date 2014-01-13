@@ -26,17 +26,16 @@
 
 namespace ns3{
 
-class Action
-{
-    public:
-        Action();
-  Action(Ptr<Node> node);
-        virtual ~Action();
-        virtual bool execute()=0;
-public:
-  Ptr<Node> m_node;
-};
-
+  class Action
+  {
+  public:
+    Action();
+    Action(Ptr<Node> node);
+    virtual ~Action();
+    virtual bool execute()=0;
+  public:
+    Ptr<Node> m_node;
+  };
 
 }//namespace ns3
 

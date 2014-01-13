@@ -28,19 +28,19 @@
 
 namespace ns3{
 
-class FlowAction : public Action
-{
-    public:
-        FlowAction();
-  FlowAction(Ptr<Node> node, Ipv4Address target, Ipv4Address nexthop);
-  virtual ~FlowAction();
-        bool execute();
+  class FlowAction : public Action
+  {
+  public:
+    FlowAction();
+    FlowAction(Ptr<Node> node, Ipv4Address target, Ipv4Address nexthop);
+    virtual ~FlowAction();
+    bool execute();
 
-    private:
+  private:
 
-  Ipv4Address m_target;
-  Ipv4Address m_nexthop;
-};
+    Ipv4Address m_target;
+    Ipv4Address m_nexthop;
+  };
 
 }// namespace ns3
 

@@ -34,49 +34,46 @@
 namespace ns3 {
 
   /**
-   * \brief A helper to make it easier to instantiate an ns3::OnOffApplication 
-   * on a set of nodes.
+   * \brief A helper to make it easier to instantiate an ns3::SdManet 
+   * application on a set of nodes.
    */
   class SdManetHelper
   {
   public:
     /**
-     * Create an SdManetHelper to make it easier to work with OnOffApplications
+     * Create an SdManetHelper to make it easier to work with SdManet
      *
-     * \param protocol the name of the protocol to use to send traffic
-     *        by the applications. This string identifies the socket
-     *        factory type used to create sockets for the applications.
-     *        A typical value would be ns3::UdpSocketFactory.
-     * \param address the address of the remote node to send traffic
-     *        to.
      */
     SdManetHelper ();
 
 
     /**
-     * Install an ns3::OnOffApplication on each node of the input container
+     * Install an ns3::SdManet on each node of the input container
      * configured with all the attributes set with SetAttribute.
      *
-     * \param c NodeContainer of the set of nodes on which an OnOffApplication 
+     * \param c NodeContainer of the set of nodes on which an SdManet application
      * will be installed.
+     * \param controller The controller all the nodes connected.
      * \returns Container of Ptr to the applications installed.
      */
     ApplicationContainer Install (NodeContainer c, Ptr<ns3::sdmanet::Controller> controller);
 
     /**
-     * Install an ns3::OnOffApplication on the node configured with all the 
+     * Install an ns3::SdManet on the node configured with all the
      * attributes set with SetAttribute.
      *
-     * \param node The node on which an OnOffApplication will be installed.
+     * \param node The node on which an SdManet will be installed.
+     * \param controller The controller all the nodes connected.
      * \returns Container of Ptr to the applications installed.
      */
     ApplicationContainer Install (Ptr<Node> node, Ptr<ns3::sdmanet::Controller> controller);
 
     /**
-     * Install an ns3::OnOffApplication on the node configured with all the 
+     * Install an ns3::SdManet on the node configured with all the
      * attributes set with SetAttribute.
      *
-     * \param nodeName The node on which an OnOffApplication will be installed.
+     * \param nodeName The node on which an SdManet will be installed.
+     * \param controller The controller all the nodes connected.
      * \returns Container of Ptr to the applications installed.
      */
     ApplicationContainer Install (std::string nodeName, Ptr<ns3::sdmanet::Controller> controller);
@@ -85,10 +82,11 @@ namespace ns3 {
   private:
     /**
      * \internal
-     * Install an ns3::OnOffApplication on the node configured with all the 
+     * Install an ns3::SdManet on the node configured with all the
      * attributes set with SetAttribute.
      *
-     * \param node The node on which an OnOffApplication will be installed.
+     * \param node The node on which an SdManet will be installed.
+     * \param controller The controller all the nodes connected.
      * \returns Ptr to the application installed.
      */
     Ptr<Application> InstallPriv (Ptr<Node> node, Ptr<ns3::sdmanet::Controller> controller);

@@ -26,42 +26,42 @@ NS_LOG_COMPONENT_DEFINE ("TimeConditionModel");
 
 namespace ns3{
 
-TimeCondition::TimeCondition()
-{
-	NS_LOG_FUNCTION (this);
-}
+  TimeCondition::TimeCondition()
+  {
+    NS_LOG_FUNCTION (this);
+  }
 
-TimeCondition::~TimeCondition()
-{
-	NS_LOG_FUNCTION (this);
-}
+  TimeCondition::~TimeCondition()
+  {
+    NS_LOG_FUNCTION (this);
+  }
 
-TimeCondition::TimeCondition(Time t)
-{
+  TimeCondition::TimeCondition(Time t)
+  {
     m_conTime = Simulator::Now() + t;
-}
+  }
 
 
-bool 
-TimeCondition::check()
-{
-  NS_LOG_FUNCTION(this);
+  bool
+  TimeCondition::check()
+  {
+    NS_LOG_FUNCTION(this);
 
-  if(m_conTime < Simulator::Now())
-    {
-      NS_LOG_DEBUG("Time is up!");
-      return true;
-    }
-  else
-    return false;
-}
+    if(m_conTime < Simulator::Now())
+      {
+        NS_LOG_DEBUG("Time is up!");
+        return true;
+      }
+    else
+      return false;
+  }
 
-void 
-TimeCondition::setTimeAfter(Time t)
-{
-  m_conTime = Simulator::Now() + t;
+  void
+  TimeCondition::setTimeAfter(Time t)
+  {
+    m_conTime = Simulator::Now() + t;
 
-}
+  }
 
 
 }//namespace ns3

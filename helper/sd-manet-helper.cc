@@ -67,12 +67,15 @@ SdManetHelper::Install (NodeContainer c, Ptr<ns3::sdmanet::Controller> controlle
 Ptr<Application>
 SdManetHelper::InstallPriv (Ptr<Node> node, Ptr<ns3::sdmanet::Controller> controller) 
 {
-  //create agent and set the controller.
+  //Create agent and set the controller.
   Ptr<sdmanet::Agent> agent = CreateObject<sdmanet::Agent>();
+  //Register agent to controller
   agent->setController(controller);
   agent->setNode(node);
   controller->addAgent(agent);
+  //Initialize the rules list.
   controller->initRules(agent);
+  //Set the agent attribute
   m_factory.Set("Agent", PointerValue(agent));
 
   Ptr<Application> app = m_factory.Create<Application> ();

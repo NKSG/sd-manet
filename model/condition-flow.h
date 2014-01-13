@@ -30,22 +30,22 @@
 
 namespace ns3{
 
-class FlowCondition : public Condition
-{
-    public:
-        FlowCondition();
-  FlowCondition(Ptr<Node> node, Mac48Address m);
-        virtual ~FlowCondition();
-        bool check();
+  class FlowCondition : public Condition
+  {
+  public:
+    FlowCondition();
+    FlowCondition(Ptr<Node> node, Mac48Address m);
+    virtual ~FlowCondition();
+    bool check();
 
 
-    private:
+  private:
 
-  bool m_connect;
-  Mac48Address m_mac;
-  void ProcessTxOk(WifiMacHeader const &);
+    bool m_connect;
+    Mac48Address m_mac;
+    void ProcessTxOk(WifiMacHeader const &);
 
-};
+  };
 
 
 }// namespace ns3

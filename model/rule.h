@@ -28,31 +28,58 @@
 
 namespace ns3{
 
-typedef std::list<Condition *> LISTCON;
+  //Type define for condition list.
+  typedef std::list<Condition *> LISTCON;
 
-class Rule
-{
-    public:
-        Rule();
-        virtual ~Rule();
-        bool preMatch();
-        bool postMatch();
-        void addpreCondition(Condition* c);
-        void addpostCondition(Condition* c);
-        void addAction(Action * a);
-        Action* getAction();
+  class Rule
+  {
+  public:
+    Rule();
+    virtual ~Rule();
+    /**
+     * \brief Match a pre conditions of a rule
+     */
+    bool preMatch();
+    /**
+     * \brief Match a post conditions of a rule
+     */
+    bool postMatch();
+    /**
+     * \brief add a pre condition to the precondition list.
+     */
+    void addpreCondition(Condition* c);
+    /**
+     * \brief add a post condition to the postcondition list.
+     */
+    void addpostCondition(Condition* c);
+    void addAction(Action * a);
+    Action* getAction();
 
-    private:
-        LISTCON preConditions;
-        LISTCON postConditions;
-        LISTCON::iterator condition;
-        Action* action;
+  private:
+    /**
+     * preConditions is set for when the action should be executed.
+     */
+    LISTCON preConditions;
+    /**
+     * postConditions is set for when some action should stop execute.
+     * some action like move will be executed continuously until some
+     * condition is triggered.
+     */
+    LISTCON postConditions;
+    LISTCON::iterator condition;
+    Action* action; // The action will be executed.
 
-        bool match(LISTCON conList);
+    /**
+     * \internal
+     * \brief Match the condition list.
+     * \param conList Condition list will be matched.
+     * \return TRUE if condition is triggered.FALSE is failed.
+     */
+    bool match(LISTCON conList);
 
-};
+  };
 
-} //
+} // namespace ns3
 
 
 #endif /* RULE_H */
