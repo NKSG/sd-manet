@@ -25,85 +25,96 @@ NS_LOG_COMPONENT_DEFINE ("Agent");
 
 namespace ns3{
 
-namespace sdmanet{
+  namespace sdmanet{
 
-Agent::Agent()
-{
-    NS_LOG_FUNCTION (this);
-}
-
-Agent::~Agent()
-{
-    NS_LOG_FUNCTION (this);
-}
-
-void
-Agent::setController(Ptr<sdmanet::Controller> c)
-{
-  m_controller = c;
-}
-
-void
-Agent::setNode(Ptr<Node> node)
-{
-  m_node = node;
-}
-
-Ptr<Node>
-Agent::getNode()
-{
-  return m_node;
-}
-
-void
-Agent::loop(){
-
-    checkInstalledRules();
-    //    doExeRule();
-}
-
-void
-Agent::installRule(Rule* rule){
-
-	m_installedRules.push_back(rule);
-}
-
-void
-Agent::checkInstalledRules()
-{
-
-  for(rule = m_installedRules.begin(); rule != m_installedRules.end() && !m_installedRules.empty(); ){
-    Rule *r = *rule;
-    if(r->preMatch()){
-      Action * action = r->getAction();
-      action->execute();
-      m_completeRules.push_back(*rule);
-      rule = m_installedRules.erase(rule);
+    Agent::Agent()
+    {
+      NS_LOG_FUNCTION (this);
     }
-    else{
-      ++rule;
+
+    Agent::~Agent()
+    {
+      NS_LOG_FUNCTION (this);
     }
-  }
-}
 
-void
-Agent::doExeRule()
-  {
-    for(rule = m_exeRules.begin(); rule != m_exeRules.end(); ){
+    void
+    Agent::setController(Ptr<sdmanet::Controller> c)
+    {
+      m_controller = c;
+    }
 
-      Rule *r = *rule;
-      Action * action = r->getAction();
-      if(!r->postMatch()){
-        action->execute();
-        ++rule;
+    void
+    Agent::setNode(Ptr<Node> node)
+    {
+      m_node = node;
+    }
+
+    Ptr<Node>
+    Agent::getNode()
+    {
+      return m_node;
+    }
+
+    void
+    Agent::SetBeaconInterval(Time interval)
+    {
+      NS_LOG_FUNCTION (this << interval);
+      if ((interval.GetMicroSeconds () % 1024) != 0)
+        {
+          NS_LOG_WARN ("beacon interval should be multiple of 1024us, see IEEE Std. 802.11-2007, section 11.1.1.1");
+        }
+      m_beaconInterval = interval;
+    }
+
+    void
+    Agent::loop(){
+
+      checkInstalledRules();
+      //    doExeRule();
+    }
+
+    void
+    Agent::installRule(Rule* rule){
+
+      m_installedRules.push_back(rule);
+    }
+
+    void
+    Agent::checkInstalledRules()
+    {
+
+      for(rule = m_installedRules.begin(); rule != m_installedRules.end() && !m_installedRules.empty(); ){
+        Rule *r = *rule;
+        if(r->preMatch()){
+          Action * action = r->getAction();
+          action->execute();
+          m_completeRules.push_back(*rule);
+          rule = m_installedRules.erase(rule);
+        }
+        else{
+          ++rule;
+        }
       }
-      else{
-        m_completeRules.push_back(*rule);
-        rule = m_exeRules.erase(rule);
-      }
-
     }
-  }
 
-}
+    void
+    Agent::doExeRule()
+    {
+      for(rule = m_exeRules.begin(); rule != m_exeRules.end(); ){
+
+        Rule *r = *rule;
+        Action * action = r->getAction();
+        if(!r->postMatch()){
+          action->execute();
+          ++rule;
+        }
+        else{
+          m_completeRules.push_back(*rule);
+          rule = m_exeRules.erase(rule);
+        }
+
+      }
+    }
+
+  }
 }//namespace ns3

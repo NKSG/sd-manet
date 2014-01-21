@@ -29,7 +29,6 @@
 #include "ns3/object.h"
 #include "ns3/controller.h"
 #include "ns3/ptr.h"
-#include "ns3/neighbor.h"
 
 namespace ns3{
 
@@ -56,19 +55,13 @@ namespace ns3{
       void installRule(Rule* rule);
       void setNode(Ptr<Node> node);
       Ptr<Node> getNode();
-      void SetBeaconInterval (Time interval);
 
     private:
       RULELIST m_installedRules; //Rules list installed in the agent.
       RULELIST m_exeRules;       //Rules list needed to execute all the time.
       RULELIST m_completeRules;  //Rules list had completed.
-      RULELIST::iterator rule;   //Rules list iterator
 
-      Neighbors m_nb;            //Neighbor nodes
-
-      Ptr<DcaTxop> m_beaconDca;  //Dca for beacon
-      Time m_beaconInterval;     //Time interval for beacon
-      EventId m_beaconEvent;     //Event Id for send beacon
+      RULELIST::iterator rule;
 
       Ptr<sdmanet::Controller> m_controller; //The controller node connected.
       Ptr<Node> m_node; //The node agent application installed.
@@ -83,8 +76,6 @@ namespace ns3{
        *
        */
       void doExeRule();
-
-      void SendBeacon(void);
     };
 
   }
