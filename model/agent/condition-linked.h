@@ -28,6 +28,7 @@
 #include "ns3/callback.h"
 #include "ns3/wifi-mac-header.h"
 #include "ns3/wifi-module.h"
+#include "ns3/internet-module.h"
 #include "network-module.h"
 
 namespace ns3{
@@ -36,7 +37,7 @@ namespace ns3{
   {
   public:
     LinkedCondition();
-    LinkedCondition(Ptr<Node> node,Ipv4Address ip2);
+    LinkedCondition(Ptr<Node> node,Ipv4Address ip_target);
     virtual ~LinkedCondition();
     bool check();
 
@@ -44,8 +45,8 @@ namespace ns3{
   private:
 
     bool m_connect;
-    Mac48Address mac;
-	Mac48Address mac_target;
+	Ptr<WifiMac> mac;
+	Mac48Address mac_target_addr;
     void ProcessConnect(WifiMacHeader const &);
 	void ProcessDisconnect(WifiMacHeader const &);
 

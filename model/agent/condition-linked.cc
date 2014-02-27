@@ -41,23 +41,28 @@ LinkedCondition::LinkedCondition(Ptr<Node> node,Ipv4Address ip_target)
   Ptr<WifiNetDevice> wifi = dev->GetObject<WifiNetDevice>();
   if(wifi == 0)
     return;
-  Ptr<WifiMac> mac = wifi->GetMac();
+  mac = wifi->GetMac();
   if(mac == 0)
     return;
 
-  NodeContainer c = NodeContainer.GetGlobal();
+  NodeContainer c = NodeContainer::GetGlobal();
+  
   for (NodeContainer::Iterator iter = c.Begin (); iter != c.End (); ++iter)
   {
     //node1 = *iter;
-	if(Ipv4Address(dev->GetAddress()) == ip_target)
+	//Ipv4InterfaceAddress iaddr = dev->GetAddress();
+	Ptr<Ipv4> ipv4 = (*iter)->GetObject<Ipv4>();
+    int32_t result = ipv4->GetInterfaceForAddress(ip_target);
+	if(result != -1)
 	{  
-	  dev = *iter->GetDevice(0);
+	  dev = (*iter)->GetDevice(0);
 	  wifi = dev->GetObject<WifiNetDevice>();
 	  if(wifi == 0)
         return;
-      mac_target = wifi->GetMac();
+      Ptr<WifiMac> mac_target = wifi->GetMac();
       if(mac_target == 0)
         return; 
+	  mac_target_addr = mac_target->GetAddress();
       break;		
 	}
   }
@@ -82,10 +87,10 @@ LinkedCondition::ProcessConnect(WifiMacHeader const & hdr)
 {
   Mac48Address addr = hdr.GetAddr1();
   //NS_LOG_DEBUG("find neighbor mac :" << addr);
-  if(mac_target == addr)
+  if(mac_target_addr == addr)
   {
     m_connect = true;
-	mac->TraceDisConnectWithoutContext("TxErrHeader", MakeCallback (&LinkedCondition::ProcessDisconnect, this));
+	mac->TraceDisconnectWithoutContext("TxErrHeader", MakeCallback (&LinkedCondition::ProcessDisconnect, this));
   }
 
 }
@@ -95,7 +100,7 @@ LinkedCondition::ProcessDisconnect(WifiMacHeader const & hdr)
 {
   Mac48Address addr = hdr.GetAddr1();
   //NS_LOG_DEBUG("find neighbor mac :" << addr);
-  if(mac_target == addr)
+  if(mac_target_addr == addr)
   {
     m_connect = false;
 	mac->TraceConnectWithoutContext("TxOkHeader", MakeCallback (&LinkedCondition::ProcessConnect, this));
